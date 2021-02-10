@@ -1,34 +1,27 @@
 package tests;
 
-import org.testng.Assert;
+import io.qameta.allure.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import tests.BaseTest;
+import pages.Objects;
+import utils.Listeners.TestListener;
 
+@Listeners({ TestListener.class })
+@Epic("Regression Tests")
+@Feature("Event Tests")
 public class FirstTest extends BaseTest {
-    @Test
-    public void GOOGLE1() {
-        System.out.println("Google1 Test Started! " + "Thread Id: " +  Thread.currentThread().getId());
-        getDriver().navigate().to("http://www.google.com");
-        System.out.println("Google1 Test's Page title is: " + getDriver().getTitle() +" " + "Thread Id: " +  Thread.currentThread().getId());
-        Assert.assertEquals(getDriver().getTitle(), "Google");
-        System.out.println("Google1 Test Ended! " + "Thread Id: " +  Thread.currentThread().getId());
+
+    @Test(priority = 0, groups ={"events"} ,description="Test 1: Preview upcoming events")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Test Description: Preview upcoming events")
+    @Story("Verify upcoming events")
+    public void numberOfCardsEqualsToCounter() {
+        homePage
+                .goToEpam()
+                .goToEventsPage()
+                .verifyEvents(Objects.upcomingEventsCounter, Objects.upcomingEvents, Objects.numberOfUpcomingEvents);
     }
 
-    @Test
-    public void GOOGLE2() {
-        System.out.println("Google2 Test Started! " + "Thread Id: " +  Thread.currentThread().getId());
-        getDriver().navigate().to("http://www.google.com");
-        System.out.println("Google2 Test's Page title is: " + getDriver().getTitle() +" " + "Thread Id: " +  Thread.currentThread().getId());
-        Assert.assertEquals(getDriver().getTitle(), "Google");
-        System.out.println("Google2 Test Ended! " + "Thread Id: " +  Thread.currentThread().getId());
-    }
 
-    @Test
-    public void GOOGLE3() {
-        System.out.println("Google3 Test Started! " + "Thread Id: " +  Thread.currentThread().getId());
-        getDriver().navigate().to("http://www.google.com");
-        System.out.println("Google3 Test's Page title is: " + getDriver().getTitle() +" " + "Thread Id: " +  Thread.currentThread().getId());
-        Assert.assertEquals(getDriver().getTitle(), "Google");
-        System.out.println("Google3 Test Ended! " + "Thread Id: " +  Thread.currentThread().getId());
-    }
+
 }

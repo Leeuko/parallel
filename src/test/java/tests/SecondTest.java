@@ -1,25 +1,25 @@
 package tests;
 
-import org.testng.Assert;
+import io.qameta.allure.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import tests.BaseTest;
+import pages.Objects;
+import utils.Listeners.TestListener;
 
+@Listeners({ TestListener.class })
+@Epic("Regression Tests")
+@Feature("Event Tests")
 public class SecondTest extends BaseTest {
-    @Test
-    public void GOOGLE4() {
-        System.out.println("Google4 Test Started! " + "Thread Id: " +  Thread.currentThread().getId());
-        getDriver().navigate().to("http://www.google.com");
-        System.out.println("Google4 Test's Page title is: " + getDriver().getTitle() +" " + "Thread Id: "+ Thread.currentThread().getId());
-        Assert.assertEquals(getDriver().getTitle(), "Google");
-        System.out.println("Google4 Test Ended! " + "Thread Id: " +  Thread.currentThread().getId());
-    }
 
-    @Test
-    public void YANDEX() {
-        System.out.println("Yandex Test Started! " + "Thread Id: " +  Thread.currentThread().getId());
-        getDriver().navigate().to("http://www.yandex.com");
-        System.out.println("Yandex Test's Page title is: " + getDriver().getTitle() +" " + "Thread Id: " + Thread.currentThread().getId());
-        Assert.assertEquals(getDriver().getTitle(), "Yandex");
-        System.out.println("Yandex Test Ended! " + "Thread Id: " +  Thread.currentThread().getId());
+
+    @Test (priority = 0, groups ={"videos"} , description="Test 7: Verify search for videos by word 'QA'")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Test Description: Open videos and search by word QA")
+    @Story("Verify criteria for videos")
+    public void VerifySearchByQA () throws InterruptedException {
+        homePage
+                .goToEpam()
+                .goToVideoPage()
+                .videoSearch(Objects.allVideos, Objects.CardTitle);
     }
 }
