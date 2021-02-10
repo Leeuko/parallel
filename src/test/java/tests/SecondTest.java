@@ -1,7 +1,10 @@
+package tests;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import tests.BaseTest;
 
-public class SecondTest extends BaseTest{
+public class SecondTest extends BaseTest {
     @Test
     public void GOOGLE4() {
         System.out.println("Google4 Test Started! " + "Thread Id: " +  Thread.currentThread().getId());

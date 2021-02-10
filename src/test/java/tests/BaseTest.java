@@ -1,3 +1,5 @@
+package tests;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.openqa.selenium.WebDriver;
@@ -6,6 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
+import pages.CapabilityFactory;
 
 public class BaseTest {
     //Declare ThreadLocal Driver (ThreadLocalMap) for ThreadSafe Tests
