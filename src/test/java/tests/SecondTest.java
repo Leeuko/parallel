@@ -12,7 +12,7 @@ import utils.Listeners.TestListener;
 public class SecondTest extends BaseTest {
 
 
-    @Test (priority = 0, groups ={"videos"} , description="Test 7: Verify search for videos by word 'QA'")
+    @Test (priority = 1, description="Test 7: Verify search for videos by word 'QA'")
     @Severity(SeverityLevel.BLOCKER)
     @Description("Test Description: Open videos and search by word QA")
     @Story("Verify criteria for videos")
