@@ -11,6 +11,17 @@ import utils.Listeners.TestListener;
 @Feature("Event Tests")
 public class SecondTest extends BaseTest {
 
+    @Test (priority = 1, description="Test 6: Verify videos by criteria")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Test Description: Open videos and verify filters")
+    @Story("Verify criteria for videos")
+    public void verifyVideosByCriteria () throws InterruptedException {
+        homePage
+                .goToEpam()
+                .goToVideoPage()
+                .openVideosByCriteria()
+                .verifyVideosShownByCriteria(Objects.allVideos, Objects.videoCardHref);
+    }
 
     @Test (priority = 1, description="Test 7: Verify search for videos by word 'QA'")
     @Severity(SeverityLevel.BLOCKER)

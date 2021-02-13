@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" name="Suite" parallel="tests" >
-    <parameter name="browser" value="chrome"/>
-    <listeners>
-        <listener class-name="utils.Listeners.TestListener"/>
-        <listener class-name="utils.Listeners.AnnotationTransformer"/>
-    </listeners>
-    <test name="com.tests.FirstTest" parallel="methods" thread-count="3">
+<suite name="Suite" thread-count="2" parallel="tests">
+    <test name="FirstTest">
+        <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="tests.FirstTest" >
-            <methods>
-                <include name="numberOfCardsEqualsToCounter" />
-                <include name="orderOfDisplayedBlocks" />
-            </methods>
+            <class name="tests.FirstTest">
+                <methods>
+                    <include name="numberOfCardsEqualsToCounter" />
+                    <include name="orderOfDisplayedBlocks" />
+                    <include name="verifyThisWeekDate" />
+                    <include name="pastEventsCanada" />
+                    <include name="previewEventDetails" />
+                </methods>
             </class>
+        </classes>
+    </test> <!-- First Test -->
+    <test name="SecondTest" >
+        <parameter name="browser" value="chrome"/>
+        <classes>
             <class name="tests.SecondTest">
                 <methods>
-                    <include name="VerifySearchByQA" />
                     <include name="verifyVideosByCriteria" />
+                    <include name="VerifySearchByQA" />
                 </methods>
-        </class>
+            </class>
         </classes>
-    </test>
+    </test> <!-- Second Test -->
 </suite> <!-- Suite -->

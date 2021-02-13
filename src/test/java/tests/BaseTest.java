@@ -33,11 +33,6 @@ public class BaseTest {
         homePage = new HomePage(driver.get());
     }
 
-    @AfterMethod
-    public void tearDown() {
-        getDriver().quit();
-    }
-
     @AfterClass void terminate () {
         //Remove the ThreadLocalMap element
         driver.remove();

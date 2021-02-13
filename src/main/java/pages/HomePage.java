@@ -42,6 +42,8 @@ public class HomePage extends BasePage {
 
         driver.get(baseURL);
         pageLoaded(driver, baseURL, 60);
+        logger.info(baseURL + " - page loaded");
+        saveTextLog(baseURL + " - page loaded");
         return this;
     }
 
@@ -61,6 +63,8 @@ public class HomePage extends BasePage {
         }
 
         waitVisibility(Objects.upcomingEventsCounter);
+        logger.info(driver.getCurrentUrl() + "is opened");
+        saveTextLog(driver.getCurrentUrl() + "is opened");
         return this;
     }
 
@@ -69,11 +73,11 @@ public class HomePage extends BasePage {
 
         BasePage.exceptCookies(driver);
         Objects.videos(driver).click();
-        //here sleep is important,test runs too fast, waitVisibility doesn't work
-        sleep(500);
         waitVisibility(Objects.filter);
         //here sleep is important, have to wait for correct cards, another way test returns card before filtering
-        sleep(500);
+        sleep(800);
+        logger.info(driver.getCurrentUrl() + "is opened");
+        saveTextLog(driver.getCurrentUrl() + "is opened");
         return this;
     }
 
@@ -83,6 +87,8 @@ public class HomePage extends BasePage {
         int counterNumber = Integer.parseInt(driver.findElement(counter).getText());
         WebElement  allEvents= driver.findElement(events);
         List<WebElement> numberOfEvents = allEvents.findElements(numberEvents);
+        logger.info("number of events is - " + numberOfEvents.size() + "; number on the button is - " + counterNumber);
+        saveTextLog("number of events is - " + numberOfEvents.size() + "; number on the button is - " + counterNumber);
         Assert.assertEquals(counterNumber, numberOfEvents.size());
         return this;
     }
@@ -154,12 +160,11 @@ public class HomePage extends BasePage {
         waitVisibility(Objects.eventContent);
         String eventContentTitle = driver.findElement(Objects.eventContent).getText();
         assertEquals(eventContentTitle, Title);
-
         return  this;
     }
 
     @Step("Set filters for videos: Category - Testing, Location - Belarus, Language - English")
-    public  HomePage openVideosByCriteria() throws InterruptedException {
+    public  HomePage openVideosByCriteria(){
 
         Objects.moreFilters(driver).click();
         Objects.category(driver).click();
@@ -183,7 +188,7 @@ public class HomePage extends BasePage {
     }
 
     @Step("Verify video results for set criteria")
-    public  HomePage verifyVideosShownByCriteria(By Sections, By Cards){
+    public  HomePage verifyVideosShownByCriteria(By Sections, By Cards) throws InterruptedException {
 
         WebElement allSections = driver.findElement(Sections);
         List<WebElement> allCards = allSections.findElements(Cards);
@@ -193,7 +198,8 @@ public class HomePage extends BasePage {
             String eventLink = card.getAttribute("href");
             Objects.linkLocation.add(eventLink);
         }
-
+        //need to wait for topic
+        sleep(800);
         //Open each link and verify information
         for (String cardLink : Objects.linkLocation) {
             driver.get(cardLink);
