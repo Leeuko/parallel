@@ -21,6 +21,8 @@ import java.sql.Timestamp;
 import static java.lang.Thread.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import utilities.ServerConfig;
+import org.aeonbits.owner.ConfigFactory;
 
 public class HomePage extends BasePage {
 
@@ -28,8 +30,7 @@ public class HomePage extends BasePage {
         super(driver);
     }
     private final Logger logger = LogManager.getLogger(HomePage.class);
-
-    String baseURL = "https://events.epam.com/";
+    private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
 
     //To show text where result can be different
     @Attachment(value = "{0}", type = "text/plain")
@@ -40,10 +41,10 @@ public class HomePage extends BasePage {
     @Step("Open Epam page")
     public HomePage goToEpam() {
 
-        driver.get(baseURL);
-        pageLoaded(driver, baseURL, 60);
-        logger.info(baseURL + " - page loaded");
-        saveTextLog(baseURL + " - page loaded");
+        driver.get(cfg.url());
+        pageLoaded(driver, cfg.url(), 60);
+        logger.info(cfg.url() + " - page loaded");
+        saveTextLog(cfg.url() + " - page loaded");
         return this;
     }
 
