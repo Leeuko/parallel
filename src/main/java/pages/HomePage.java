@@ -74,9 +74,8 @@ public class HomePage extends BasePage {
 
         BasePage.exceptCookies(driver);
         Objects.videos(driver).click();
-        waitVisibility(Objects.filter);
         //here sleep is important, have to wait for correct cards, another way test returns card before filtering
-        sleep(800);
+        sleep(1000);
         logger.info(driver.getCurrentUrl() + "is opened");
         saveTextLog(driver.getCurrentUrl() + "is opened");
         return this;
@@ -165,11 +164,12 @@ public class HomePage extends BasePage {
     }
 
     @Step("Set filters for videos: Category - Testing, Location - Belarus, Language - English")
-    public  HomePage openVideosByCriteria(){
+    public  HomePage openVideosByCriteria() throws InterruptedException {
 
         Objects.moreFilters(driver).click();
+        logger.info("moreFilters selected");
         Objects.category(driver).click();
-
+        logger.info("categories selected");
         //move scroll down to see Testing checkbox
         JavascriptExecutor je = (JavascriptExecutor) driver;
         WebElement categoryTesting = Objects.categoryTesting(driver);
@@ -180,11 +180,16 @@ public class HomePage extends BasePage {
         je2.executeScript("arguments[0].scrollIntoView(true);",login);
         // now checkbox can be selected
         categoryTesting.click();
-
+        logger.info("testing selected");
+        sleep(800);
         Objects.location(driver).click();
         Objects.locationBelarus(driver).click();
+        logger.info("Belarus selected");
         Objects.language(driver).click();
         Objects.languageEnglish(driver).click();
+        logger.info("English selected");
+        //wait for valid cards after filters set
+        sleep(1000);
         return  this;
     }
 
@@ -193,24 +198,32 @@ public class HomePage extends BasePage {
 
         WebElement allSections = driver.findElement(Sections);
         List<WebElement> allCards = allSections.findElements(Cards);
-
+        logger.info("List created, allCards = " + allCards.size());
         //collect all links to the cards details
         for (WebElement card : allCards) {
             String eventLink = card.getAttribute("href");
             Objects.linkLocation.add(eventLink);
         }
+        logger.info("all links are saved");
         //need to wait for topic
         sleep(800);
         //Open each link and verify information
         for (String cardLink : Objects.linkLocation) {
             driver.get(cardLink);
-            waitVisibility(Objects.topic);
+            sleep(2000);
+            logger.info("link opened" + driver.getCurrentUrl());
 
-            BasePage.exceptCookies(driver);
+            if (driver.findElements(Objects.cardTitle).size() == 0)
+            {
+                driver.navigate().refresh();
+                sleep(2000);
+            }
 
-            String cardTopic = driver.findElement(Objects.cardTitle).getText();
+                String cardTopic = driver.findElement(Objects.cardTitle).getText();
+
+
             String Country = Objects.videoCountry(driver).getText();
-
+            logger.info("CardTopic, Country");
             //collect all labels with topics
             WebElement Topics = driver.findElement(By.xpath("//div[@class='evnt-topics-wrapper']"));
             List<WebElement> allTopics = Topics.findElements(By.xpath("//div[contains(@class,'evnt-talk-topic')]/label"));
@@ -224,7 +237,7 @@ public class HomePage extends BasePage {
             }
 
             String Language = Objects.videoLanguage(driver).getText();
-
+            logger.info("Language");
             if (Country.contains("Belarus") && Language.contains("ENGLISH") && Objects.validTopics.size()!=0 )
             { Objects.validInfo.add(cardTopic); }
             else
@@ -235,12 +248,16 @@ public class HomePage extends BasePage {
         {
             logger.info("all cards contain valid information for set criteria");
             saveTextLog("all cards contain valid information for set criteria");
+            logger.info("valid card");
+
         }
         else{
             logger.info(Objects.invalidInfo + " - this topics should not be  shown for set criteria");
             saveTextLog(Objects.invalidInfo + " - this topics should not be  shown for set criteria");
+
         }
         return  this;
+
     }
 
     @Step("Verify video results for set criteria")
@@ -248,7 +265,7 @@ public class HomePage extends BasePage {
 
         Objects.videoSearch(driver).sendKeys("QA");
         //need to wait for correct cards after search
-        sleep(800);
+        sleep(1000);
 
         //collects all cards appeared after search
         WebElement allSections = driver.findElement(allsections);

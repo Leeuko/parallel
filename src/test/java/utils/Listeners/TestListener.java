@@ -1,6 +1,7 @@
 package utils.Listeners;
 
 import com.relevantcodes.extentreports.LogStatus;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -13,6 +14,8 @@ import utilities.Log;
 import utils.ExtentReport.ExtentManager;
 import utils.ExtentReport.ExtentTestManager;
 
+import java.io.ByteArrayInputStream;
+
 public class TestListener extends BaseTest implements ITestListener {
 
     private static String getTestMethodName(ITestResult iTestResult) {
@@ -20,9 +23,9 @@ public class TestListener extends BaseTest implements ITestListener {
     }
 
     //Text attachments for Allure
-    @Attachment(value = "Page screenshot", type = "image/png")
-    public byte[] saveScreenshotPNG (WebDriver driver) {
-        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+
+    public void saveScreenshotPNG (WebDriver driver, ITestResult iTestResult) {
+        Allure.addAttachment(iTestResult.getName(), new ByteArrayInputStream(((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES)));
     }
 
     //Text attachments for Allure
@@ -77,7 +80,7 @@ public class TestListener extends BaseTest implements ITestListener {
         //Allure ScreenShotRobot and SaveTestLog
         if (driver instanceof WebDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
-            saveScreenshotPNG(driver);
+            saveScreenshotPNG(driver, iTestResult);
         }
 
         //Save a log on allure.

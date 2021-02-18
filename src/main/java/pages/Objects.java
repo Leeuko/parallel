@@ -12,7 +12,7 @@ public class Objects {
     public static WebElement element = null;
     public static By locationCanada =  By.xpath("//label[@data-value='Canada']");
     public static By topic = By.xpath("//div[contains(@class,'evnt-talk-topic')]/label");
-    public static By cardTitle = By.className("evnt-talk-title");
+    public static By cardTitle = By.xpath("/html/body/div[2]/div[1]/main/section[1]/div/div[2]/div/div/div/div[1]/h1");
     public static By eventsFromTopMenu = By.cssSelector("li.nav-item:nth-child(2) > a:nth-child(1)");
     public static By eventsFromBottomMenu = By.xpath("//div[@class='evnt-cards-container']/h3/a[@href='/all-events']");
     public static By filter = By.cssSelector(".evnt-toggle-filters-button");
@@ -65,7 +65,9 @@ public class Objects {
     }
 
     public static WebElement moreFilters(WebDriver driver){
-        element = driver.findElement(By.cssSelector(".evnt-toggle-filters-button"));
+        element = driver.findElement(By.xpath("//div[contains(@class, 'show-more')]/span"));
+
+
         return element;
     }
 
