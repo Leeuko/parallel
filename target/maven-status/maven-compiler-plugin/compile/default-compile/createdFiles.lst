@@ -1,0 +1,7 @@
+pages\BasePage.class
+pages\Objects.class
+utilities\ServerConfig.class
+pages\OptionsManager.class
+pages\HomePage.class
+utilities\Log.class
+pages\CapabilityFactory.class
