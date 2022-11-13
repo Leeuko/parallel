@@ -19,8 +19,8 @@ public class SecondTest extends BaseTest {
         homePage
                 .goToEpam()
                 .goToVideoPage()
-                .openVideosByCriteria()
-                .verifyVideosShownByCriteria(Objects.allVideos, Objects.videoCardHref);
+                .videosByCriteria()
+                .videosDecision();
     }
 
     @Test (priority = 1, description="Test 7: Verify search for videos by word 'QA'")
@@ -31,6 +31,8 @@ public class SecondTest extends BaseTest {
         homePage
                 .goToEpam()
                 .goToVideoPage()
-                .videoSearch(Objects.allVideos, Objects.CardTitle);
+                .searchQAVideos()
+                .verifyQATopics()
+                .videosDecision();
     }
 }
